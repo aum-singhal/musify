@@ -124,10 +124,10 @@ class Music(commands.Cog):
     embed.add_field(name='Click here to invite', value='https://discord.com/api/oauth2/authorize?client_id=819233568621854760&permissions=4294967287&scope=bot')
     await ctx.send(embed=embed)
 
-  @commands.command()
+  @commands.command(aliases=["p"])
   async def play(self, ctx,*, url=""):
     await join(ctx)
-    url = search(ctx, url)
+    url = search(url)
 
     try:
       async with ctx.typing():
