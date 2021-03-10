@@ -79,6 +79,14 @@ class Music(commands.Cog):
         )
     await ctx.send(embed=embed)
 
+  @commands.command()
+  async def invite(self, ctx):
+    embed = discord.Embed(
+      title = 'Invite me to your server',
+      colour = colour()
+    )
+    embed.add_field(name='Click here to invite', value='https://discord.com/api/oauth2/authorize?client_id=819233568621854760&permissions=4294967287&scope=bot')
+    await ctx.send(embed=embed)
 
 
 
