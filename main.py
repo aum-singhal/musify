@@ -157,6 +157,10 @@ async def change_status():
     await client.change_presence(activity=discord.Game(choice(status)))
 
 
+@client.event
+async def on_command_error(ctx,error):
+  await ctx.send(f"```{error}```")
+
 client.add_cog(Music(client))
 
 client.run(os.environ['token'])
