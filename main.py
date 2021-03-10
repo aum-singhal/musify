@@ -128,19 +128,11 @@ class Music(commands.Cog):
   async def play(self, ctx,*, url=""):
     await join(ctx)
     url = search(url)
-
-    try:
-      async with ctx.typing():
-        player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
-        ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-      await ctx.send('Now playing: {}'.format(player.title))
-    except:
-      embed = discord.Embed(
-      title = 'Opps! 😥',
-      description = "I couldn't find any song with that name. \nPlease try again.",
-      colour = discord.Colour.orange()
-      )
-      await ctx.send(embed=embed)
+    
+    async with ctx.typing():
+      player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
+      ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+    await ctx.send('Now playing: {}'.format(player.title))
     
 
 
