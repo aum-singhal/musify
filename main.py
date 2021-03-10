@@ -81,7 +81,7 @@ async def join(ctx):
         await author.connect()
 
 
-async def search(ctx,*, url=""):
+async def search(url=""):
     if 'http' in url:
       return url
     else:
