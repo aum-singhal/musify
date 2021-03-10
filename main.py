@@ -79,4 +79,19 @@ class Music(commands.Cog):
     await ctx.send(embed=embed)
 
 
+
+
+@client.event
+async def on_ready():
+  change_status.start()
+  print("The Bot is online!")
+
+
+@tasks.loop(seconds=10)
+async def change_status():
+    await client.change_presence(activity=discord.Game(choice(status)))
+
+
+client.add_cog(Music(client))
+
 client.run(os.environ['token'])
