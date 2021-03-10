@@ -65,6 +65,42 @@ class YTDLSource(discord.PCMVolumeTransformer):
     return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options, before_options='-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'), data=data)
 
 
+async def join(ctx):
+    author = ctx.author.voice
+    if not author:
+      embed = discord.Embed(
+      title = 'Opps! 😥',
+      description = 'You are not connected to any voice channel. \nTry again after connecting to a voice channel.',
+      colour = discord.Colour.red()
+      )
+      await ctx.send(embed=embed)
+    else:
+      author = ctx.author.voice.channel
+      voiceClient = ctx.voice_client
+      if not voiceClient:
+        await author.connect()
+
+
+async def search(ctx,*, url=""):
+    if 'http' in url:
+      return url
+    else:
+      l = url.split(' ')
+      j = ''
+      for i in l:
+        j += i
+        j += '+'
+      url = j
+      htm_content = urllib.request.urlopen(
+        'http://www.youtube.com/results?search_query=' + url
+      )
+      search_results = re.findall(r"watch\?v=(\S{11})", htm_content.read().decode())
+      std = 'http://www.youtube.com/watch?v='
+      url = str(std) + str(search_results[0])
+      return url
+
+
+
 class Music(commands.Cog):
 
   def __init__(self, bot):
@@ -87,6 +123,26 @@ class Music(commands.Cog):
     )
     embed.add_field(name='Click here to invite', value='https://discord.com/api/oauth2/authorize?client_id=819233568621854760&permissions=4294967287&scope=bot')
     await ctx.send(embed=embed)
+
+  @commands.command()
+  async def play(self, ctx,*, url=""):
+    await join(ctx)
+    url = search(ctx, url)
+
+    try:
+      async with ctx.typing():
+        player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
+        ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+      await ctx.send('Now playing: {}'.format(player.title))
+    except:
+      embed = discord.Embed(
+      title = 'Opps! 😥',
+      description = "I couldn't find any song with that name. \nPlease try again.",
+      colour = discord.Colour.orange()
+      )
+      await ctx.send(embed=embed)
+    
+
 
 
 
