@@ -69,8 +69,6 @@ class Music(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
-
-
 #sends the ping
   @commands.command()
   async def ping(self, ctx):
