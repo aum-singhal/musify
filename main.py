@@ -8,6 +8,7 @@ import asyncio
 import urllib.parse, urllib.request, re
 
 client = commands.Bot(command_prefix=commands.when_mentioned_or(">"), description='Relatively simple music bot example')
+status = ['Listening to >help','Singing music 🎙','🍩 Eating Doughnut']
 
 def colour():
   l = [
