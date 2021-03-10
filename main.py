@@ -127,6 +127,7 @@ class Music(commands.Cog):
   @commands.command(aliases=["p"])
   async def play(self, ctx,*, url=""):
     await join(ctx)
+    print(url)
     url = search(url)
     print(url)
     
