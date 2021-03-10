@@ -97,6 +97,7 @@ async def search(url=""):
       search_results = re.findall(r"watch\?v=(\S{11})", htm_content.read().decode())
       std = 'http://www.youtube.com/watch?v='
       url = str(std) + str(search_results[0])
+      print(url)
       return url
 
 
