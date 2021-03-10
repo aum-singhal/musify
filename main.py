@@ -82,7 +82,7 @@ async def join(ctx):
 
 
 async def search(url=""):
-    if 'http' in url:
+    if 'http://www.youtube.com' in url:
       return url
     else:
       l = url.split(' ')
@@ -128,6 +128,7 @@ class Music(commands.Cog):
   async def play(self, ctx,*, url=""):
     await join(ctx)
     url = search(url)
+    print(url)
     
     async with ctx.typing():
       player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
