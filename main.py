@@ -102,6 +102,7 @@ async def search(url=""):
 
 
 
+
 class Music(commands.Cog):
 
   def __init__(self, bot):
@@ -129,7 +130,7 @@ class Music(commands.Cog):
   async def play(self, ctx,*, url=""):
     await join(ctx)
     print(url)
-    url = search(url)
+    url = await search(url)
     print(url)
     
     async with ctx.typing():
