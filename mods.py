@@ -25,3 +25,12 @@ class MODs(commands.Cog):
       colour = colour()
     )
     await ctx.send(embed = em)
+  
+  @commands.command()
+  async def help(self, ctx):
+    em = discord.Embed(
+      title = "Help",
+      description = "This is the normal message",
+      colour = colour()
+    )
+    await ctx.send(embed=em)
