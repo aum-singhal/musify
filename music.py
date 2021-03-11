@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from random import choice
+import math
 
 client = commands.Bot(command_prefix=commands.when_mentioned_or(">"), description='Relatively simple music bot example')
 
@@ -22,7 +23,7 @@ class Music(commands.Cog):
   @commands.command()
   async def ping(self, ctx):
     em = discord.Embed(
-      title = f'Latency: {round(client.latency *1000)}ms',
+      title = f'Latency: {math.round(client.latency *1000)}ms',
       colour = colour()
     )
     ctx.send(embed=em)
