@@ -102,6 +102,11 @@ async def search(url=""):
 		url = str(std) + str(search_results[0])
 		return url
 
+async def typing(ctx, url):
+  while ctx.typing:
+    player = await YTDLSource.from_url(url, loop=ctx.bot.loop, stream=True)
+    ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+  await ctx.send('Now playing: {}'.format(player.title))
 
 
 @client.event
