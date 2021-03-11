@@ -74,6 +74,7 @@ async def join(ctx):
         colour = discord.Colour.red()
       )
       await ctx.send(embed=em)
+      return 1
     else:
       author = ctx.author.voice.channel
       voiceClient = ctx.voice_client
@@ -81,6 +82,7 @@ async def join(ctx):
         await author.connect()
       else:
         await ctx.send("**Already connected to :**" + author)
+      return 0
 
 
 async def search(ctx, url=""):
@@ -107,19 +109,21 @@ class Music(commands.Cog):
 
   @commands.command()
   async def play(self, ctx, *, url=""):
-    await join(ctx)
-
-    if url == '':
-      embed = discord.Embed(
-        title = 'Opps! 😥',
-        description = "You didn't specified any song to play. \nPlease try again but this time specify a song name or url to play.",
-        colour = discord.Colour.orange()
-      )
-      await ctx.send(embed=embed)
+    w = await join(ctx)
+    if w == 1:
+      print("User not connected")
     else:
-      url = await search(ctx, url)
+      if url == '':
+        embed = discord.Embed(
+          title = 'Opps! 😥',
+          description = "You didn't specified any song to play. \nPlease try again but this time specify a song name or url to play.",
+          colour = discord.Colour.orange()
+        )
+        await ctx.send(embed=embed)
+      else:
+        url = await search(ctx, url)
 
-      async with ctx.typing():
-        player = await YTDLSource.from_url(url, loop= ctx.bot.loop, stream=True)  # before_options='-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'
-        ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-      await ctx.send('Now playing: {}'.format(player.title))
+        async with ctx.typing():
+          player = await YTDLSource.from_url(url, loop= ctx.bot.loop, stream=True)  # before_options='-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'
+          ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+        await ctx.send('Now playing: {}'.format(player.title))
