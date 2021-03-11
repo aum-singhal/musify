@@ -26,8 +26,10 @@ class starting(commands.Cog):
 
   @commands.command()
   async def ping(self, ctx):
+    l = client.latency * 1000
+    r = int(l)
     em = discord.Embed(
-      title = f"Pong! {round(client.latency, 1)}",
+      title = f"Pong! {r}",
       colour = colour()
     )
     await ctx.send(embed=em)
