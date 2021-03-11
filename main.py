@@ -29,7 +29,8 @@ class starting(commands.Cog):
     l = client.latency * 1000
     r = int(l)
     em = discord.Embed(
-      title = f"Pong! {r}",
+      title = "Pong!",
+      description = f"**Latency: {r}ms**",
       colour = colour()
     )
     await ctx.send(embed=em)
