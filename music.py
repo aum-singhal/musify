@@ -40,7 +40,7 @@ ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
 
 
 class YTDLSource(discord.PCMVolumeTransformer):
-	def __init__(self, source, *, data, volume=0.5):
+	def __init__(self, source, *, data, volume=1):
 		super().__init__(source, volume)
 
 		self.data = data
@@ -57,7 +57,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
 			# take first item from a playlist
 			data = data['entries'][0]
 
-		filename = data['url'] if stream else ytdl.prepare_filename(data)
+		filename = data['url']
 		return cls(discord.FFmpegPCMAudio(
       filename,
       **ffmpeg_options,
