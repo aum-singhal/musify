@@ -17,18 +17,6 @@ def colour():
 class MODs(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
-
-  
-  @commands.command()
-  async def ping(self, ctx):
-    l = client.latency * 1000
-    r = int(l)
-    em = discord.Embed(
-      title = "Pong!",
-      description = f"**Latency: {r}ms**",
-      colour = colour()
-    )
-    await ctx.send(embed=em)
   
   
   @commands.command()
