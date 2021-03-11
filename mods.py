@@ -24,4 +24,4 @@ class MODs(commands.Cog):
       title = f"Pong: {abs( client.latency * 1000)}",
       colour = colour()
     )
-    ctx.send(embed = em)
+    await ctx.send(embed = em)
