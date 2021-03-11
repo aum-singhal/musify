@@ -21,7 +21,7 @@ class MODs(commands.Cog):
   @commands.command()
   async def ping(self, ctx):
     em = discord.Embed(
-      title = f"Pong: {abs( client.latency * 1000)}",
+      title = f"Pong: {int( client.latency * 1000)}",
       colour = colour()
     )
     await ctx.send(embed = em)
