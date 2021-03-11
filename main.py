@@ -27,7 +27,7 @@ class starting(commands.Cog):
   @commands.command()
   async def ping(self, ctx):
     em = discord.Embed(
-      title = f"Latency: {round(client.latency * 1000)}ms",
+      title = f"Pong! {round(client.latency, 0)}",
       colour = colour()
     )
     await ctx.send(embed=em)
@@ -50,5 +50,6 @@ async def on_command_error(ctx, error):
 
 client.add_cog(Music(client))
 client.add_cog(MODs(client))
+client.add_cog(starting(client))
 
 client.run(os.environ['token'])
