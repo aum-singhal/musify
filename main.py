@@ -138,9 +138,9 @@ class Music(commands.Cog):
 		print(url)
 
 		async with ctx.typing():
-			player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
-			ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-		await ctx.send('Now playing: {}'.format(player.title))
+			source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(url))
+      ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
+		await ctx.send('Now playing: {}'.format(url))
 
 
 #Pause the song
