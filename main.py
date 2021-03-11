@@ -20,21 +20,6 @@ def colour():
   return choice(l)
 
 
-class starting(commands.Cog):
-  def __init__(self, client):
-    self.client = client
-
-  @commands.command()
-  async def ping(self, ctx):
-    l = client.latency * 1000
-    r = int(l)
-    em = discord.Embed(
-      title = "Pong!",
-      description = f"**Latency: {r}ms**",
-      colour = colour()
-    )
-    await ctx.send(embed=em)
-
 @client.event
 async def on_ready():
 	change_status.start()
@@ -53,6 +38,5 @@ async def on_command_error(ctx, error):
 
 client.add_cog(Music(client))
 client.add_cog(MODs(client))
-client.add_cog(starting(client))
 
 client.run(os.environ['token'])
