@@ -120,6 +120,6 @@ class Music(commands.Cog):
       url = await search(ctx, url)
 
       async with ctx.typing():
-        player = await YTDLSource.from_url(url, loop= ctx.bot.loop, stream=True, before_options='-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5')
+        player = await YTDLSource.from_url(url, loop= ctx.bot.loop, stream=True)  # before_options='-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'
         ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
       await ctx.send('Now playing: {}'.format(player.title))
