@@ -49,7 +49,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
 		self.url = data.get('url')
 
 	@classmethod
-	async def from_url(cls, url, *, loop=None, stream=False):
+	async def from_url(cls, url, *, loop=None, stream=True):
 		loop = loop or asyncio.get_event_loop()
 		data = await loop.run_in_executor( None, lambda: ytdl.extract_info(url, download=not stream))
 
@@ -57,7 +57,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
 			# take first item from a playlist
 			data = data['entries'][0]
 
-		filename = data['url']
+		filename = data['url'] if stream else ytdl.prepare_filename(data)
 		return cls(discord.FFmpegPCMAudio(
       filename,
       **ffmpeg_options,
@@ -107,7 +107,7 @@ class Music(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
-  @commands.command()
+  @commands.command(aliases=["p"])
   async def play(self, ctx, *, url=""):
     w = await join(ctx)
     if w == 1:
@@ -172,6 +172,15 @@ class Music(commands.Cog):
       
 
 #Disconnect the bot from 
-  @commands.command()
+  @commands.command(aliases=["dc"])
   async def disconnect(self, ctx):
     await ctx.voice_client.disconnect()
+
+
+#Changes the Volume of the bot
+  @commands.command(aliases=["vol"])
+  async def volume(self, ctx, volume: int):
+    if ctx.voice_client is None:
+      return await ctx.send("Not connected to a voice channel.")
+    ctx.voice_client.source.volume = volume / 100
+    await ctx.send("Changed volume to {}%".format(volume))

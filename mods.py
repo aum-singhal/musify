@@ -23,7 +23,7 @@ class MODs(commands.Cog):
   async def help(self, ctx):
     em = discord.Embed(
       title = "Help",
-      description = "This is the normal message",
+      description = "Following are the commands you can use with the bot. Type `>help [command name]` to know more about the command",
       colour = colour()
     )
     await ctx.send(embed=em)
