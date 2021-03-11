@@ -127,3 +127,51 @@ class Music(commands.Cog):
           player = await YTDLSource.from_url(url, loop= ctx.bot.loop, stream=True)  # before_options='-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'
           ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         await ctx.send('Now playing: {}'.format(player.title))
+
+
+#Pause the song
+  @commands.command()
+  async def pause(self, ctx):
+    if not ctx.voice_client.is_playing():
+      embed = discord.Embed(
+        title = 'Opps!',
+        description = 'I am not playing anything already.',
+        colour = colour()
+        )
+      await ctx.send(embed=embed)
+    else:
+      ctx.voice_client.pause()
+
+
+#Resume the song
+  @commands.command()
+  async def resume(self, ctx):
+    if not ctx.voice_client.is_playing():
+      ctx.voice_client.resume()
+    else:
+      embed = discord.Embed(
+        title = 'Opps!',
+        description = 'I am already playing.',
+        colour = colour()
+        )
+      await ctx.send(embed=embed)
+
+
+#Stops then song
+  @commands.command()
+  async def stop(self, ctx):
+    if not ctx.voice_client.is_playing():
+      embed = discord.Embed(
+        title = 'Opps!',
+        description = 'I am not playing anything already.',
+        colour = colour()
+        )
+      await ctx.send(embed=embed)
+    else:
+      await ctx.voice_client.stop()
+      
+
+#Disconnect the bot from 
+  @commands.command()
+  async def disconnect(self, ctx):
+    await ctx.voice_client.disconnect()
