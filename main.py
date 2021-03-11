@@ -35,13 +35,6 @@ async def on_command_error(ctx, error):
 	await ctx.send(f"```{error}```")
 
 
-async def ping(ctx):
-  em = discord.Embed(
-    title = f"Pong: {round(client.latency * 1000)}ms",
-    colour = colour()
-  )
-  ctx.send(embed = em)
-
 client.add_cog(Music(client))
 client.add_cog(MODs(client))
 
