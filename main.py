@@ -20,6 +20,18 @@ def colour():
   return choice(l)
 
 
+class starting(commands.Cog):
+  def __init__(self, client):
+    self.client = client
+
+  @commands.command()
+  async def ping(self, ctx):
+    em = discord.Embed(
+      title = f"Latency: {round(client.latency * 1000)}ms",
+      colour = colour()
+    )
+    await ctx.send(embed=em)
+
 @client.event
 async def on_ready():
 	change_status.start()
