@@ -24,7 +24,7 @@ def colour():
 youtube_dl.utils.bug_reports_message = lambda: ''
 
 ytdl_format_options = {
-  'format': 'audio/best',
+  'format': 'bestaudio/best',
   'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
   'restrictfilenames': True,
   'noplaylist': True,
@@ -76,7 +76,8 @@ async def join(ctx):
 		    title='Opps! 😥',
 		    description=
 		    'You are not connected to any voice channel. \nTry again after connecting to a voice channel.',
-		    colour=discord.Colour.red())
+		    colour=discord.Colour.red()
+    )
 		await ctx.send(embed=embed)
 	else:
 		author = ctx.author.voice.channel
@@ -140,6 +141,55 @@ class Music(commands.Cog):
 			player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
 			ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
 		await ctx.send('Now playing: {}'.format(player.title))
+
+
+#Pause the song
+  @commands.command()
+  async def pause(self, ctx):
+    if not ctx.voice_client.is_playing():
+      embed = discord.Embed(
+        title = 'Opps!',
+        description = 'I am not playing anything already.',
+        colour = discord.Colour.red()
+        )
+      await ctx.send(embed=embed)
+    else:
+      await ctx.voice_client.pause()
+
+
+#Resume the song
+  @commands.command()
+  async def resume(self, ctx):
+    if not ctx.voice_client.is_playing():
+      await ctx.voice_client.resume()
+    else:
+      embed = discord.Embed(
+        title = 'Opps!',
+        description = 'I am already playing.',
+        colour = discord.Colour.red()
+        )
+      await ctx.send(embed=embed)
+
+
+#Stops then song
+  @commands.command()
+  async def stop(self, ctx):
+    if not ctx.voice_client.is_playing():
+      embed = discord.Embed(
+        title = 'Opps!',
+        description = 'I am not playing anything already.',
+        colour = discord.Colour.red()
+      )
+      await ctx.send(embed=embed)
+    else:
+      await ctx.voice_client.stop()
+      
+
+#Disconnect the bot from 
+  @commands.command()
+  async def disconnect(self, ctx):
+    await ctx.voice_client.disconnect()
+
 
 
 @client.event
