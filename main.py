@@ -6,6 +6,7 @@ from mods import MODs
 import os
 
 client = commands.Bot(command_prefix=commands.when_mentioned_or(">"), description='Relatively simple music bot example')
+client.remove_command('help')
 status = ['Listening to >help', 'Singing music 🎙', '🍩 Eating Doughnut']
 
 
