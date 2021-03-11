@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands, tasks
 from random import choice
 from music import Music
+from mods import MODs
 import os
 
 client = commands.Bot(command_prefix=commands.when_mentioned_or(">"), description='Relatively simple music bot example')
@@ -34,7 +35,6 @@ async def on_command_error(ctx, error):
 	await ctx.send(f"```{error}```")
 
 
-@client.commands()
 async def ping(ctx):
   em = discord.Embed(
     title = f"Pong: {round(client.latency * 1000)}ms",
@@ -43,5 +43,6 @@ async def ping(ctx):
   ctx.send(embed = em)
 
 client.add_cog(Music(client))
+client.add_cog(MODs(client))
 
 client.run(os.environ['token'])
