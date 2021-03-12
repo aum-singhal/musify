@@ -208,6 +208,7 @@ class MusicPlayer(commands.Cog):
 class Music(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
+    self.players = {}
 
   
   def get_player(self, ctx):
