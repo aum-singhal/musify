@@ -35,6 +35,15 @@ class starting(commands.Cog):
     )
     await ctx.send(embed=em)
 
+  @commands.command()
+  async def invite(self, ctx):
+    em = discord.Embed(
+      title= "Invite me you your server!!!",
+      colour = colour()
+    )
+    em.add_field(name="click to invite me", value="https://discord.com/api/oauth2/authorize?client_id=819233568621854760&permissions=4294967287&scope=bot")
+    await ctx.send(embed=em)
+
 @client.event
 async def on_ready():
 	change_status.start()
